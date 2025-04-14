@@ -1,0 +1,3 @@
+### Test call for getStoreById endpoint
+GET http://localhost:8080/quiz
+Accept: application/json
