@@ -1,5 +1,7 @@
 package hr.tvz.quizzard.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +24,13 @@ public class Quiz {
 
     private String title;
     private String description;
+
+    @JsonFormat(pattern="dd--MM-yyyy")
     private LocalDate creationDate;
-    private String category;
+
+    @Enumerated(EnumType.STRING)
+    private QuizCategory category;
+
     private Double averageRating;
     private Integer ratingCount;
 
@@ -32,6 +39,7 @@ public class Quiz {
     private UserEntity ownerId;
 
     @OneToMany(mappedBy = "quizId", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Question> questions = new ArrayList<>();
 }
 

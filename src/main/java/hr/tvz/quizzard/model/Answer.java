@@ -1,5 +1,7 @@
 package hr.tvz.quizzard.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,10 +20,12 @@ public class Answer {
     private Integer id;
 
     private String text;
+    @JsonIgnore
     private boolean isCorrect;
 
     @ManyToOne
     @JoinColumn(name = "questionId")
+    @JsonBackReference
     private Question questionId;
 }
 

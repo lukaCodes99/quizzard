@@ -11,8 +11,9 @@ spring.datasource.password=pass
 desni klik na databases da kreirate bazu i samo ostavite sve kako je (default) i upišite quizzard
 ![quizzardPG](https://github.com/user-attachments/assets/c84e4452-e54b-4880-b91c-5eacb8640482)
 
-nakon što ste to sve napravili i prvi put pokrenuli aplikaciju i sve je prošlo u redu, zaustavite aplikaciju, rename datoteke "data-backup.sql" u "data.sql" i ponovno pokrenite aplikaciju kako bi dobili nešto testnih podataka u samu bazu nakon što ste se uvjerili da su podaci dostupni u bazi, vratite naziv datoteke u "data-backup.sql"
+nakon što ste to sve napravili i prvi put pokrenuli aplikaciju i sve je prošlo u redu, zaustavite aplikaciju, rename datoteke "data-backup.sql" u "data.sql" i ponovno pokrenite aplikaciju kako bi dobili nešto testnih podataka u samu bazu;
+nakon što ste se uvjerili da su podaci dostupni u bazi, vratite naziv datoteke u "data-backup.sql"
 
-isto tako, u httpTesting direktoriju imate testing.http za jednostavno testiranje, čisto da se uvjerite da radi (može se i dodavati pos requestovi itd. to će vjerojatno biti sa kasnijim commitovima)
+isto tako, u httpTesting direktoriju imate testing.http datoteku za jednostavno testiranje, čisto da se uvjerite da radi (može se i dodavati pos requestovi itd. to će vjerojatno biti sa kasnijim commitovima)
 
 koristit ćemo model mapper umjesto mapstruct zbog portability

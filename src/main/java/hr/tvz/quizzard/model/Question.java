@@ -1,5 +1,7 @@
 package hr.tvz.quizzard.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -28,9 +30,11 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "quizId")
+    @JsonBackReference
     private Quiz quizId;
 
     @OneToMany(mappedBy = "questionId", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Answer> answers = new ArrayList<>();
 }
 
