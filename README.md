@@ -14,3 +14,5 @@ desni klik na databases da kreirate bazu i samo ostavite sve kako je (default) i
 nakon što ste to sve napravili i prvi put pokrenuli aplikaciju i sve je prošlo u redu, zaustavite aplikaciju, rename datoteke "data-backup.sql" u "data.sql" i ponovno pokrenite aplikaciju kako bi dobili nešto testnih podataka u samu bazu nakon što ste se uvjerili da su podaci dostupni u bazi, vratite naziv datoteke u "data-backup.sql"
 
 isto tako, u httpTesting direktoriju imate testing.http za jednostavno testiranje, čisto da se uvjerite da radi (može se i dodavati pos requestovi itd. to će vjerojatno biti sa kasnijim commitovima)
+
+koristit ćemo model mapper umjesto mapstruct zbog portability
