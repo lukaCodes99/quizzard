@@ -1,10 +1,12 @@
 package hr.tvz.quizzard.service;
 
+import hr.tvz.quizzard.dto.NewQuizDto;
 import hr.tvz.quizzard.dto.QuizDto;
 import hr.tvz.quizzard.mapper.QuizMapper;
 import hr.tvz.quizzard.model.Quiz;
 import hr.tvz.quizzard.repository.QuizRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +48,13 @@ public class QuizService {
             quizDtos.add(quizMapper.mapQuizToQuizDto(quiz));
         }
         return quizDtos;
+    }
+
+    @Transactional
+    public void saveQuiz(NewQuizDto quizDto) {
+        Quiz quiz = quizMapper.mapNewQuizDtoToQuiz(quizDto);
+        quiz.setRatingCount(0);
+        quiz.setAverageRating(0.0);
+        quizRepository.save(quiz);
     }
 }

@@ -1,5 +1,6 @@
 package hr.tvz.quizzard.controller;
 
+import hr.tvz.quizzard.dto.NewQuizDto;
 import hr.tvz.quizzard.dto.QuizDto;
 import hr.tvz.quizzard.model.Quiz;
 import hr.tvz.quizzard.model.Role;
@@ -20,24 +21,6 @@ public class QuizController {
 
     public QuizController(QuizService quizService) {
         this.quizService = quizService;
-    }
-
-    private final List<UserEntity> userEntityList = Arrays.asList(
-            new UserEntity(1, "lzka", "sdad", "fdasda", Role.USER),
-            new UserEntity(2, "lzka", "sdad", "fdasda", Role.USER),
-            new UserEntity(3, "lzka", "sdad", "fdasda", Role.USER),
-            new UserEntity(4, "lzka", "sdad", "fdasda", Role.USER),
-            new UserEntity(5, "lzka", "sdad", "fdasda", Role.USER),
-            new UserEntity(6, "lzka", "sdad", "fdasda", Role.USER),
-            new UserEntity(7, "lzka", "sdad", "fdasda", Role.USER),
-            new UserEntity(8, "lzka", "sdad", "fdasda", Role.USER),
-            new UserEntity(9, "lzka", "sdad", "fdasda", Role.USER),
-            new UserEntity(10, "lzka", "sdad", "fdasda", Role.USER)
-    );
-
-    @GetMapping()
-    public ResponseEntity<List<UserEntity>> findAll() {
-        return ResponseEntity.ok(userEntityList);
     }
 
     @GetMapping("/{id}")
@@ -70,6 +53,16 @@ public class QuizController {
         try {
             quizService.addRating(id, score);
             return ResponseEntity.ok("Rating added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<?> saveQuiz(@RequestBody NewQuizDto quizDto) {
+        try {
+            quizService.saveQuiz(quizDto);
+            return ResponseEntity.ok("Quiz saved successfully");
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }

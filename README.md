@@ -17,3 +17,7 @@ nakon što ste se uvjerili da su podaci dostupni u bazi, vratite naziv datoteke 
 isto tako, u httpTesting direktoriju imate testing.http datoteku za jednostavno testiranje, čisto da se uvjerite da radi (može se i dodavati pos requestovi itd. to će vjerojatno biti sa kasnijim commitovima)
 
 koristit ćemo model mapper umjesto mapstruct zbog portability
+
+NAPOMENE:
+1.) ukoliko vam se javlja problem sa spremanjem novih entiteta u bazu u vidu "id already exists" potrebno je više puta pokušati unijeti i tad će se upisati (to se dešava jer već imamo neke podatke koji nisu uneseni preko requesta nego manualno kroz skriptu)
+2.) dodao sam swagger koji je dostupan na http://localhost:8080/swagger-ui/index.html nakon što pokrenete aplikaciju -- VRLO LAKO TESTIRANJE (npr POST requestovi već imaju složen model koji je potreban za unos) a koristi i frontendu jer zna što mora slati

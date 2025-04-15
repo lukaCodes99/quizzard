@@ -34,7 +34,7 @@ public class Question {
     @JsonBackReference
     private Quiz quizId;
 
-    @OneToMany(mappedBy = "questionId")
+    @OneToMany(mappedBy = "questionId", cascade=CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Answer> answers = new ArrayList<>();
 }

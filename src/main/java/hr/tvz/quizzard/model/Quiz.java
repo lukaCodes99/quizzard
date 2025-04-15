@@ -39,7 +39,7 @@ public class Quiz {
     @JoinColumn(name = "ownerId")
     private UserEntity ownerId;
 
-    @OneToMany(mappedBy = "quizId")
+    @OneToMany(mappedBy = "quizId", cascade=CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Question> questions = new ArrayList<>();
 }

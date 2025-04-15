@@ -8,5 +8,5 @@ Accept: application/json
 
 
 ### Test call for quiz by id endpoint
-GET http://localhost:8080/quiz/1
+GET http://localhost:8080/quiz/37
 Accept: application/json
