@@ -1,11 +1,10 @@
 package hr.tvz.quizzard.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,7 +12,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "quizzes")
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Quiz {
@@ -25,7 +26,7 @@ public class Quiz {
     private String title;
     private String description;
 
-    @JsonFormat(pattern="dd--MM-yyyy")
+    @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDate creationDate;
 
     @Enumerated(EnumType.STRING)
@@ -38,7 +39,7 @@ public class Quiz {
     @JoinColumn(name = "ownerId")
     private UserEntity ownerId;
 
-    @OneToMany(mappedBy = "quizId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "quizId")
     @JsonManagedReference
     private List<Question> questions = new ArrayList<>();
 }

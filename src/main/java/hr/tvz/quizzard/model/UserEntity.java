@@ -1,13 +1,13 @@
 package hr.tvz.quizzard.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity {
@@ -17,6 +17,7 @@ public class UserEntity {
     private Integer id;
 
     private String username;
+    @JsonIgnore
     private String password;
     private String email;
 

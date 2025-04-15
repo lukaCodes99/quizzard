@@ -1,20 +1,21 @@
 package hr.tvz.quizzard.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "questions")
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"answers", "quizId"})
 @AllArgsConstructor
 @NoArgsConstructor
 public class Question {
@@ -33,7 +34,7 @@ public class Question {
     @JsonBackReference
     private Quiz quizId;
 
-    @OneToMany(mappedBy = "questionId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "questionId")
     @JsonManagedReference
     private List<Answer> answers = new ArrayList<>();
 }

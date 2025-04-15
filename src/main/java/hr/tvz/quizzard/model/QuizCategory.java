@@ -1,5 +1,6 @@
 package hr.tvz.quizzard.model;
 
+
 public enum QuizCategory {
     SCIENCE,
     HISTORY,

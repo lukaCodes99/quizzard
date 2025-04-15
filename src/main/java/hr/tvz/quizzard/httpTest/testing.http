@@ -1,3 +1,12 @@
-### Test call for getStoreById endpoint
+### Test call for quiz endpoint
 GET http://localhost:8080/quiz
+Accept: application/json
+
+### Test call for quiz list endpoint
+GET http://localhost:8080/quiz/all
+Accept: application/json
+
+
+### Test call for quiz by id endpoint
+GET http://localhost:8080/quiz/1
 Accept: application/json

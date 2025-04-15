@@ -2,15 +2,16 @@ package hr.tvz.quizzard.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 @Entity
 @Table(name = "answers")
-@Data
+@Getter
+@Setter
+@ToString(exclude = "questionId")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Answer {
