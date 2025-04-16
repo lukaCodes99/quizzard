@@ -19,8 +19,10 @@ public class AnswerController {
     public ResponseEntity<Object> updateAnswer(@PathVariable Long id, @RequestBody AnswerDto answerDto) {
         try {
             //TODO implement updateAnswer method in AnswerService
+            return null;
         } catch (Exception e) {
             //return ResponseHelper.errorMsgResponse(e.getMessage());
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
         }
     }
 
