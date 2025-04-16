@@ -6,6 +6,10 @@ Accept: application/json
 GET http://localhost:8080/quiz/all
 Accept: application/json
 
+### Test call for quiz list endpoint with filter
+GET http://localhost:8080/quiz/all?title=Sample%20Quiz&description=sample&creationDateFrom=2023-01-01&creationDateTo=2023-12-31&category=SCIENCE&averageRatingFrom=4.0&averageRatingTo=5.0&pageIndex=0&pageSize=10&sortField=title&desc=false
+Accept: application/json
+
 
 ### Test call for quiz by id endpoint
 GET http://localhost:8080/quiz/37

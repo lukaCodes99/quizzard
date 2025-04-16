@@ -2,14 +2,18 @@ package hr.tvz.quizzard.service;
 
 import hr.tvz.quizzard.dto.NewQuizDto;
 import hr.tvz.quizzard.dto.QuizDto;
+import hr.tvz.quizzard.filterParams.QuizFilterParams;
 import hr.tvz.quizzard.mapper.QuizMapper;
 import hr.tvz.quizzard.model.Quiz;
 import hr.tvz.quizzard.repository.QuizRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,16 +42,11 @@ public class QuizService {
     }
 
     public List<QuizDto> getAllQuizzes() {
-        List<Quiz> quizzes = quizRepository.findAll();
-//        return quizzes.stream()
-//                .map(quizMapper::mapQuizToQuizDto)
-//                .toList();
-        List<QuizDto> quizDtos = new ArrayList<>();
-        for (Quiz quiz : quizzes) {
-            System.out.println(quiz.toString());
-            quizDtos.add(quizMapper.mapQuizToQuizDto(quiz));
-        }
-        return quizDtos;
+
+        return quizRepository.findAll().stream()
+                .map(quizMapper::mapQuizToQuizDto)
+                .toList();
+
     }
 
     @Transactional
@@ -55,6 +54,20 @@ public class QuizService {
         Quiz quiz = quizMapper.mapNewQuizDtoToQuiz(quizDto);
         quiz.setRatingCount(0);
         quiz.setAverageRating(0.0);
+        quiz.setCreationDate(LocalDate.now());
         quizRepository.save(quiz);
+    }
+
+    public Page<QuizDto> getAllQuizzesFiltered(QuizFilterParams quizFilterParams, Pageable pageable) {
+        return quizRepository.findAllFiltered(
+                quizFilterParams.getCategory(),
+                quizFilterParams.getAverageRatingFrom(),
+                quizFilterParams.getAverageRatingTo(),
+                quizFilterParams.getCreationDateFrom(),
+                quizFilterParams.getCreationDateTo(),
+                quizFilterParams.getDescription(),
+                quizFilterParams.getTitle(),
+                pageable
+        ).map(quizMapper::mapQuizToQuizDto);
     }
 }

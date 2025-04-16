@@ -34,8 +34,8 @@ public class QuizMapper {
                 quizDto.getQuestions().stream()
                         .map(questionDto -> {
                             Question question = questionMapper.mapQuestionDtoToQuestion(questionDto);
-                            question.setQuizId(quiz); // Set the parent Quiz directly
-                            question.getAnswers().forEach(answer -> answer.setQuestionId(question)); // Set parent Question for each Answer
+                            question.setQuizId(quiz);
+                            question.getAnswers().forEach(answer -> answer.setQuestionId(question));
                             return question;
                         })
                         .toList()

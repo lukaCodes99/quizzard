@@ -2,16 +2,18 @@ package hr.tvz.quizzard.controller;
 
 import hr.tvz.quizzard.dto.NewQuizDto;
 import hr.tvz.quizzard.dto.QuizDto;
+import hr.tvz.quizzard.filterParams.QuizFilterParams;
+import hr.tvz.quizzard.helpers.PageableHelper;
 import hr.tvz.quizzard.model.Quiz;
-import hr.tvz.quizzard.model.Role;
-import hr.tvz.quizzard.model.UserEntity;
 import hr.tvz.quizzard.service.QuizService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/quiz")
@@ -36,12 +38,26 @@ public class QuizController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<QuizDto>> getAllQuizzes() {
+    public ResponseEntity<Map<String, Object>> getAllQuizzes(
+            @ModelAttribute QuizFilterParams quizFilterParams,
+            @RequestParam(defaultValue = "0") int pageIndex,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "id") String sortField,
+            @RequestParam(defaultValue = "true") Boolean desc
+    ) {
         try {
-            List<QuizDto> quizzes = quizService.getAllQuizzes();
-            return ResponseEntity.ok(quizzes);
+            Page<QuizDto> quizzesPaged = quizService.getAllQuizzesFiltered(quizFilterParams,
+                    PageableHelper.getPageableObject(pageIndex, pageSize, sortField, desc));
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("data", quizzesPaged.getContent());
+            response.put("pageIndex", quizzesPaged.getNumber());
+            response.put("rowCount", quizzesPaged.getTotalElements());
+            response.put("pageSize", quizzesPaged.getSize());
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(null);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
