@@ -14,3 +14,12 @@ Accept: application/json
 ### Test call for quiz by id endpoint
 GET http://localhost:8080/quiz/37
 Accept: application/json
+
+### Test call for quiz by id endpoint
+DELETE http://localhost:8080/question/10/delete
+Accept: application/json
+
+
+### Test call for filtered flagged content endpoint
+GET http://localhost:8080/flagged-content/all
+Accept: application/json
