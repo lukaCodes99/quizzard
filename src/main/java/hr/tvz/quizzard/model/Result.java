@@ -32,4 +32,11 @@ public class Result {
     @ManyToOne
     @JoinColumn(name = "userID")
     private UserEntity userId;
+
+    public Result(UserEntity userId, Quiz quizId, LocalDate date, Double score) {
+        this.userId = userId;
+        this.quizId = quizId;
+        this.date = date;
+        this.score = score;
+    }
 }

@@ -1,10 +1,14 @@
 package hr.tvz.quizzard.controller;
 
 import hr.tvz.quizzard.dto.NewQuizDto;
+import hr.tvz.quizzard.dto.QuestionDto;
 import hr.tvz.quizzard.dto.QuizDto;
 import hr.tvz.quizzard.filterParams.QuizFilterParams;
 import hr.tvz.quizzard.helpers.PageableHelper;
+import hr.tvz.quizzard.model.Question;
 import hr.tvz.quizzard.model.Quiz;
+import hr.tvz.quizzard.model.Result;
+import hr.tvz.quizzard.service.QuestionService;
 import hr.tvz.quizzard.service.QuizService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
@@ -20,9 +24,11 @@ import java.util.Map;
 public class QuizController {
 
     private final QuizService quizService;
+    private final QuestionService questionService;
 
-    public QuizController(QuizService quizService) {
+    public QuizController(QuizService quizService, QuestionService questionService) {
         this.quizService = quizService;
+        this.questionService = questionService;
     }
 
     @GetMapping("/{id}")
@@ -61,6 +67,20 @@ public class QuizController {
         }
     }
 
+
+    @PostMapping("/{id}/solve")
+    public ResponseEntity<?> solveQuiz(
+            @PathVariable Integer id,
+            @RequestBody Map<Integer, String> answers
+    ) {
+        try {
+            Result result = quizService.solveQuiz(id, answers);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
     @PostMapping("/{id}/add-rating")
     public ResponseEntity<?> addRating(
             @PathVariable Integer id,
@@ -79,6 +99,19 @@ public class QuizController {
         try {
             quizService.saveQuiz(quizDto);
             return ResponseEntity.ok("Quiz saved successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{id}/add-question")
+    public ResponseEntity<?> saveQuestion(
+            @PathVariable Integer id,
+            @RequestBody QuestionDto questionDto
+    ) {
+        try {
+            Question savedQuestion = questionService.saveQuestion(id, questionDto);
+            return ResponseEntity.ok(savedQuestion);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }
