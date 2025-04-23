@@ -33,4 +33,10 @@ public interface QuizRepository extends JpaRepository<Quiz, Integer> {
                                Pageable pageable);
 
     List<Quiz> findByOwnerId_Id(Integer userId);
+
+    List<Quiz> findTopByOrderByAverageRatingDesc();
+
+    default List<Quiz> findTopByAverageRating(int limit) {
+        return findTopByOrderByAverageRatingDesc().stream().limit(limit).toList();
+    }
 }
