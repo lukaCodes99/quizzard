@@ -23,3 +23,68 @@ Accept: application/json
 ### Test call for filtered flagged content endpoint
 GET http://localhost:8080/flagged-content/all
 Accept: application/json
+
+------------------STATISTICS------------------
+
+### Get overall platform statistics
+GET http://localhost:8080/api/statistics/platform
+Accept: application/json
+
+### Get top quizzes by number of attempts (default 5)
+GET http://localhost:8080/api/statistics/top-quizzes/attempts
+Accept: application/json
+
+### Get top 10 quizzes by attempts
+GET http://localhost:8080/api/statistics/top-quizzes/attempts?limit=10
+Accept: application/json
+
+### Get top quizzes by rating (default 5)
+GET http://localhost:8080/api/statistics/top-quizzes/ratings
+Accept: application/json
+
+### Get top 3 quizzes by rating
+GET http://localhost:8080/api/statistics/top-quizzes/ratings?limit=3
+Accept: application/json
+
+### Get statistics grouped by QuizCategory
+GET http://localhost:8080/api/statistics/categories
+Accept: application/json
+
+### Get attempt trends between two dates
+GET http://localhost:8080/api/statistics/attempts/trend?from=2020-01-01&to=2026-01-01
+Accept: application/json
+
+### Get score distribution for quiz with ID 1
+GET http://localhost:8080/api/statistics/score-distribution/1
+Accept: application/json
+
+
+-----------FLAGGED CONTENT------------
+
+### Create a new flagged content entry
+POST http://localhost:8080/flagged-content/add
+Content-Type: application/json
+Accept: application/json
+
+{
+  "comment": "This quiz contains incorrect information.",
+  "flagQuizId": 5,
+  "flagQuestionId": null,
+  "flagAnswerId": null,
+  "flagUserId": 1
+}
+
+### Mark a flagged content entry as solved (e.g., ID = 3)
+POST http://localhost:8080/flagged-content/11/solve
+Accept: application/json
+
+
+### Sorted by id descending, page 1 with pageSize 5
+GET http://localhost:8080/flagged-content/all?pageIndex=1&pageSize=5&sortField=id&desc=true
+Accept: application/json
+
+### Filter by entity type "quiz" and only solved
+GET http://localhost:8080/flagged-content/all?entity=quiz&solved=true
+Accept: application/json
+
+

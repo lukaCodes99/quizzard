@@ -20,6 +20,7 @@ public class UserEntity {
     @JsonIgnore
     private String password;
     private String email;
+    private Boolean enabled = true;
 
     @Enumerated(EnumType.STRING)
     private Role role;

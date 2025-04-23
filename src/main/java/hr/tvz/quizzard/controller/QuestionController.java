@@ -70,4 +70,16 @@ public class QuestionController {
         }
     }
 
+    @DeleteMapping("/{answerId}/delete-answer")
+    public ResponseEntity<?> deleteAnswer(
+            @PathVariable Integer answerId
+    ) {
+        try {
+            answerService.deleteAnswer(answerId);
+            return ResponseEntity.ok("Answer deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
 }

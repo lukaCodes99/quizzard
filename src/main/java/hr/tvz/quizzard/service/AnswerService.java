@@ -38,4 +38,10 @@ public class AnswerService {
         answerToSave.setQuestionId(question);
         return answerRepository.save(answerToSave);
     }
+
+    public void deleteAnswer(Integer answerId) {
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new EntityNotFoundException("Answer not found"));
+        answerRepository.delete(answer);
+    }
 }

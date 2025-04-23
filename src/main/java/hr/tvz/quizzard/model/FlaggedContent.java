@@ -17,8 +17,11 @@ public class FlaggedContent {
     private Integer id;
 
     private String comment;
-    private Integer flagQuiz;
-    private Integer flagQuestion;
-    private Integer flagAnswer;
+    private Integer flagQuizId;
+    private Integer flagQuestionId;
+    private Integer flagAnswerId;
+    private Integer flagUserId;
+
+    private Boolean solved = false;
 
 }

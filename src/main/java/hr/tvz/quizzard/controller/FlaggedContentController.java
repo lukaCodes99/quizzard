@@ -26,6 +26,7 @@ public class FlaggedContentController {
     @GetMapping("/all")
     public ResponseEntity<Map<String, Object>> getAllFlaggedContent(
             @RequestParam(required = false) String entity,
+            @RequestParam(required = false) Boolean solved,
             @RequestParam(defaultValue = "0") int pageIndex,
             @RequestParam(defaultValue = "10") int pageSize,
             @RequestParam(defaultValue = "id") String sortField,
@@ -33,7 +34,7 @@ public class FlaggedContentController {
     ) {
         try {
             Page<FlaggedContent> flaggedContent = flaggedContentService.findAllPagedAndSorted(
-                    entity,
+                    entity, solved,
                     PageableHelper.getPageableObject(pageIndex, pageSize, sortField, desc)
             );
 
@@ -45,6 +46,27 @@ public class FlaggedContentController {
             response.put("pageSize", flaggedContent.getSize());
 
             return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/{id}/solve")
+    public ResponseEntity<FlaggedContent> solveFlaggedContent(@PathVariable Integer id) {
+        try {
+            FlaggedContent updatedFlaggedContent = flaggedContentService.solveFlaggedContent(id);
+            return new ResponseEntity<>(updatedFlaggedContent, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PostMapping("/add")
+    public ResponseEntity<FlaggedContent> addFlaggedContent(@RequestBody FlaggedContent flaggedContent) {
+        try {
+            FlaggedContent savedFlaggedContent = flaggedContentService.saveFlaggedContent(flaggedContent);
+            return new ResponseEntity<>(savedFlaggedContent, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
