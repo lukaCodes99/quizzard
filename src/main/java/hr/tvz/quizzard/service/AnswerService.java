@@ -44,4 +44,9 @@ public class AnswerService {
                 .orElseThrow(() -> new EntityNotFoundException("Answer not found"));
         answerRepository.delete(answer);
     }
+
+    public Answer getAnswerById(Integer id) {
+        return answerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Answer not found"));
+    }
 }

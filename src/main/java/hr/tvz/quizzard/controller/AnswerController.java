@@ -16,6 +16,15 @@ public class AnswerController {
         this.answerService = answerService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Answer> getAnswerById(@PathVariable Integer id) {
+        Answer answer = answerService.getAnswerById(id);
+        if (answer == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(answer);
+    }
+
     @PostMapping("/{id}/update")
     public ResponseEntity<Object> updateAnswer(@PathVariable Integer id, @RequestBody AnswerDto answerDto) {
         try {

@@ -69,8 +69,6 @@ Accept: application/json
 {
   "comment": "This quiz contains incorrect information.",
   "flagQuizId": 5,
-  "flagQuestionId": null,
-  "flagAnswerId": null,
   "flagUserId": 1
 }
 
