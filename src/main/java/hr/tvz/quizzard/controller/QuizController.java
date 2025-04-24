@@ -14,6 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -32,6 +33,7 @@ public class QuizController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
     public ResponseEntity<?> getQuizById(@PathVariable Integer id) {
         try {
             Quiz quiz = quizService.getQuizById(id);
@@ -44,6 +46,7 @@ public class QuizController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
     public ResponseEntity<Map<String, Object>> getAllQuizzes(
             @ModelAttribute QuizFilterParams quizFilterParams,
             @RequestParam(defaultValue = "0") int pageIndex,
@@ -82,6 +85,7 @@ public class QuizController {
     }
 
     @PostMapping("/{id}/add-rating")
+    @PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
     public ResponseEntity<?> addRating(
             @PathVariable Integer id,
             @RequestBody Double score
@@ -95,6 +99,7 @@ public class QuizController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
     public ResponseEntity<?> saveQuiz(@RequestBody NewQuizDto quizDto) {
         try {
             quizService.saveQuiz(quizDto);
@@ -105,6 +110,7 @@ public class QuizController {
     }
 
     @PostMapping("/{id}/add-question")
+    @PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
     public ResponseEntity<?> saveQuestion(
             @PathVariable Integer id,
             @RequestBody QuestionDto questionDto

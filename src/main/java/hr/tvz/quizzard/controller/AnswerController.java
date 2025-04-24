@@ -4,10 +4,12 @@ import hr.tvz.quizzard.dto.AnswerDto;
 import hr.tvz.quizzard.model.Answer;
 import hr.tvz.quizzard.service.AnswerService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/answer")
+@PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
 public class AnswerController {
 
     private final AnswerService answerService;

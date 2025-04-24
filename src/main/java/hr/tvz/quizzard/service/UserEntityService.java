@@ -29,16 +29,17 @@ public class UserEntityService {
         return userEntityRepository.save(userEntity);
     }
 
-
-
-    public boolean getEnabledUserByUsername(String username) {
-        UserEntity user = userEntityRepository.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        return user.getEnabled();
-    }
-
     public UserEntity getUserByUsername(String username) {
         return userEntityRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
+
+    public UserEntity changeUserRole(Integer userEntityId, String newRole) {
+        UserEntity userEntity = userEntityRepository.findById(userEntityId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Role role = Role.valueOf(newRole);
+        userEntity.setRole(role);
+        return userEntityRepository.save(userEntity);
+    }
+
 }

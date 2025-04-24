@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -60,6 +61,7 @@ public class AuthController {
     }
 
     @PostMapping("/refreshToken")
+    @PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
     public JwtResponseDto refreshToken(@RequestParam String token) {
         return refreshTokenService.findByToken(token)
                 .map(refreshTokenService::verifyExpiration)
@@ -76,6 +78,7 @@ public class AuthController {
 
     @Transactional
     @PostMapping("/logout")
+    @PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
     public ResponseEntity<Map<String, String>> logoutUser(@RequestParam String refreshToken) {
 
         refreshTokenService.findByToken(refreshToken)
@@ -96,6 +99,17 @@ public class AuthController {
         UserEntity userEntity = userEntityService.registerUser(registrationRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userEntity);
+    }
+
+    @PostMapping("/{userEntityId}/change-role")
+    @PreAuthorize("hasAuthority('admin')")
+    public ResponseEntity<?> changeUserRole(@PathVariable Integer userEntityId, @RequestParam String newRole) {
+        try{
+            UserEntity userEntity = userEntityService.changeUserRole(userEntityId, newRole);
+            return ResponseEntity.ok(userEntity);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
 

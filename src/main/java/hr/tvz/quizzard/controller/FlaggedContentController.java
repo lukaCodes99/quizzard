@@ -1,13 +1,12 @@
 package hr.tvz.quizzard.controller;
 
-import hr.tvz.quizzard.dto.QuizDto;
-import hr.tvz.quizzard.filterParams.QuizFilterParams;
 import hr.tvz.quizzard.helpers.PageableHelper;
 import hr.tvz.quizzard.model.FlaggedContent;
 import hr.tvz.quizzard.service.FlaggedContentService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -15,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/flagged-content")
+@PreAuthorize("hasAnyAuthority('admin', 'moderator')")
 public class FlaggedContentController {
 
     private final FlaggedContentService flaggedContentService;

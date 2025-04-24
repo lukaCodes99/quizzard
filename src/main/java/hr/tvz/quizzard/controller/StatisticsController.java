@@ -4,6 +4,7 @@ import hr.tvz.quizzard.dto.*;
 import hr.tvz.quizzard.service.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/statistics")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('admin')")
 public class StatisticsController {
 
     private final StatisticsService statisticsService;
