@@ -4,6 +4,7 @@ import hr.tvz.quizzard.dto.RegistrationRequestDto;
 import hr.tvz.quizzard.model.Role;
 import hr.tvz.quizzard.model.UserEntity;
 import hr.tvz.quizzard.repository.UserEntityRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,18 @@ public class UserEntityService {
         userEntity.setPassword(passwordEncoder.encode(registrationRequestDto.getPassword()));
         userEntity.setRole(Role.USER);
         return userEntityRepository.save(userEntity);
+    }
+
+
+
+    public boolean getEnabledUserByUsername(String username) {
+        UserEntity user = userEntityRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        return user.getEnabled();
+    }
+
+    public UserEntity getUserByUsername(String username) {
+        return userEntityRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 }

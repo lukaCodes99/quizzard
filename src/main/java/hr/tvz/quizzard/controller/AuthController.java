@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -39,7 +40,10 @@ public class AuthController {
     @PostMapping("/login")
     public JwtResponseDto authenticate(@RequestBody AuthRequestDto request) {
 
-        refreshTokenService.deleteRefreshTokenByUsername(request.getUsername());
+        UserEntity userEntity = userEntityService.getUserByUsername(request.getUsername());
+        if(userEntity == null || !userEntity.getEnabled()) {
+            throw new AccessDeniedException("User is not active");
+        } else refreshTokenService.deleteRefreshTokenByUsername(userEntity);
 
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));

@@ -50,7 +50,7 @@ public class RefreshTokenService {
     }
 
     @Transactional
-    public void deleteRefreshTokenByUsername(String username) {
-        userEntityRepository.findByUsername(username).ifPresent(userEntity -> refreshTokenRepository.deleteByUserEntityId(userEntity));
+    public void deleteRefreshTokenByUsername(UserEntity userEntity) {
+        refreshTokenRepository.deleteByUserEntityId(userEntity);
     }
 }
