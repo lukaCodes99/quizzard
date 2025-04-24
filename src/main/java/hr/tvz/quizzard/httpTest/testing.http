@@ -87,4 +87,34 @@ Accept: application/json
 GET http://localhost:8080/flagged-content/all?entity=quiz&solved=true
 Accept: application/json
 
+-------------AUTHENTICATION-------------
+
+### Test login endpoint
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+
+"username": "11111",
+"password": "newpassword"
+
+}
+
+### Test refresh token endpoint
+POST http://localhost:8080/auth/refreshToken?token=2a6cc599-c05c-4ef7-bb7d-c10a54991372
+Accept: application/json
+
+
+### Test register endpoint
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "111wq11",
+  "password": "newpasseqwword",
+  "email": "newuse1reqwe@example.com"
+}
+
 
