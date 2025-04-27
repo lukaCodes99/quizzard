@@ -2,6 +2,8 @@ package hr.tvz.quizzard.repository;
 
 import hr.tvz.quizzard.dto.QuizStatisticsDto;
 import hr.tvz.quizzard.model.Result;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -27,5 +29,7 @@ public interface ResultRepository extends JpaRepository<Result, Integer> {
         return findTopQuizzesByAttempts(org.springframework.data.domain.PageRequest.of(0, limit));
     }
 
+
+    Page<Result> findAllByUserId_Id(Integer userId, Pageable pageableObject);
 }
 

@@ -6,6 +6,7 @@ import hr.tvz.quizzard.filterParams.QuizFilterParams;
 import hr.tvz.quizzard.mapper.QuizMapper;
 import hr.tvz.quizzard.model.Quiz;
 import hr.tvz.quizzard.model.Result;
+import hr.tvz.quizzard.model.UserEntity;
 import hr.tvz.quizzard.repository.QuizRepository;
 import hr.tvz.quizzard.repository.ResultRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,6 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -90,8 +92,11 @@ public class QuizService {
         });
 
         Double score = (double) correctAnswersCount.get() / quiz.getQuestions().size();
-        //TODO: ADD user to result (najbolje samo id usera i new)
+        UserEntity userEntity = null;
+        if(SecurityContextHolder.getContext().getAuthentication() != null) {
+            userEntity = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }
 
-        return resultRepository.save(new Result( null, quiz, LocalDate.now(), score));
+        return resultRepository.save(new Result(userEntity, quiz, LocalDate.now(), score));
     }
 }
