@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/answer")
-@PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR', 'USER')")
 public class AnswerController {
 
     private final AnswerService answerService;

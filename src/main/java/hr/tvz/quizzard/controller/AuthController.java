@@ -78,7 +78,7 @@ public class AuthController {
 
     @Transactional
     @PostMapping("/logout")
-    @PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR', 'USER')")
     public ResponseEntity<Map<String, String>> logoutUser(@RequestParam String refreshToken) {
 
         refreshTokenService.findByToken(refreshToken)
@@ -102,7 +102,7 @@ public class AuthController {
     }
 
     @PostMapping("/{userEntityId}/change-role")
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> changeUserRole(@PathVariable Integer userEntityId, @RequestParam String newRole) {
         try{
             UserEntity userEntity = userEntityService.changeUserRole(userEntityId, newRole);

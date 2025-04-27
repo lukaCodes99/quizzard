@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/question")
-@PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR', 'USER')")
 public class QuestionController {
 
     private final QuestionService questionService;

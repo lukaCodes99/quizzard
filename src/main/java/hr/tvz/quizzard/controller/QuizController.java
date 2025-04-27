@@ -33,7 +33,7 @@ public class QuizController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR', 'USER')")
     public ResponseEntity<?> getQuizById(@PathVariable Integer id) {
         try {
             Quiz quiz = quizService.getQuizById(id);
@@ -46,7 +46,7 @@ public class QuizController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR', 'USER')")
     public ResponseEntity<Map<String, Object>> getAllQuizzes(
             @ModelAttribute QuizFilterParams quizFilterParams,
             @RequestParam(defaultValue = "0") int pageIndex,
@@ -110,7 +110,7 @@ public class QuizController {
     }
 
     @PostMapping("/{id}/add-question")
-    @PreAuthorize("hasAnyAuthority('admin', 'moderator', 'user')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR', 'USER')")
     public ResponseEntity<?> saveQuestion(
             @PathVariable Integer id,
             @RequestBody QuestionDto questionDto

@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/flagged-content")
-@PreAuthorize("hasAnyAuthority('admin', 'moderator')")
+@PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR')")
 public class FlaggedContentController {
 
     private final FlaggedContentService flaggedContentService;
